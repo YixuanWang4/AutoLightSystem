@@ -7,7 +7,7 @@ Finish your code here.
 
 #include <BTCmd.h>
 
-//Function to initialize Bluetooth module
+//Function to initialize Bluetooth module, return true if successful
 bool btInit() {
 
 }

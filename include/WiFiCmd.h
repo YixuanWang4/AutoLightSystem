@@ -6,3 +6,5 @@ We will put here the common includes, definitions, and function declaration for 
 #include <WiFi.h>
 
 bool wifiInit();
+
+bool wifiLogin();

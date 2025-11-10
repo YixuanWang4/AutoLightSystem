@@ -7,7 +7,12 @@ Finish your code here.
 
 #include <WiFiCmd.h>
 
-//Function to initialize WiFi module
+//Function to initialize WiFi module before connecting to the network, return true if successful
 bool wifiInit() {
+
+}
+
+//Function to log in to the WiFi network, return true if successful
+bool wifiLogin() {
 
 }

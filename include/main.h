@@ -7,6 +7,7 @@ We will put here the common includes, definitions, and function declaration for 
 #include <Arduino.h>
 
 #include <nvs_flash.h>
+#include <nvs.h>
 
 #include <config.h>
 #include <WiFiCmd.h>
@@ -14,4 +15,8 @@ We will put here the common includes, definitions, and function declaration for 
 #include <servoCmd.h>
 #include <slp_batCmd.h>
 
+EventGroupHandle_t wifiEventGroup;
+
 bool systemInit();
+
+void keepLogInWiFi(void *parameters);

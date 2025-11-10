@@ -7,7 +7,7 @@ Finish your code here.
 
 #include <servoCmd.h>
 
-//Function to initialize Servo module
+//Function to initialize Servo module brfore use, return true if successful
 bool servoInit() {
 
 }
