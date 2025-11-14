@@ -44,7 +44,6 @@ bool btSetUp() {
         CHARACTERISTIC_UUID,
         BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_NOTIFY | BLECharacteristic::PROPERTY_INDICATE
     );
-    pCharacteristic->addDescriptor(new BLE2902());
     pService->start();
 
     BLEAdvertising *pAdvertising = BLEDevice::getAdvertising();
