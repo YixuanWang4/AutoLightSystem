@@ -9,5 +9,5 @@ Finish your code here.
 
 //Function to initialize Servo module brfore use, return true if successful
 bool servoInit() {
-
+    return true;
 }

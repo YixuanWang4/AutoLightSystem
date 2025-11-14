@@ -7,9 +7,14 @@ If you have any varaible or constant that you want to use across multiple files,
 #ifndef _config_h_
 #define _config_h_
 
+#include <Arduino.h>
+
 #define WIFI_CONN (1 << 0)
 
 
-const TickType_t wifiReconnPeriod = 5000; // Period to attempt WiFi reconnection in milliseconds
+#define WIFI_SSID "SJTU" // Replace with your WiFi SSID
+#define WIFI_PASSWORD "Joe20061001*"  // Replace with your WiFi password
+
+const TickType_t wifiReconnPeriod = 20000; // Period to attempt WiFi reconnection in milliseconds
 
 #endif

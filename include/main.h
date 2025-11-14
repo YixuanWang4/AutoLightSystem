@@ -3,6 +3,8 @@ This is the header file main.h for the Auto Light System project.
 It is written in C++11 standard, using Arduino framework and Google Coding Style.
 We will put here the common includes, definitions, and function declaration for the project.
 */
+#ifndef _main_h_
+#define _main_h_
 
 #include <Arduino.h>
 
@@ -16,7 +18,11 @@ We will put here the common includes, definitions, and function declaration for 
 #include <slp_batCmd.h>
 
 EventGroupHandle_t wifiEventGroup;
+TaskHandle_t keepLoginWifiTaskHandle;
 
 bool systemInit();
 
-void keepLogInWiFi(void *parameters);
+void keepLoginWiFi(void *parameters);
+
+
+#endif

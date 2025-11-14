@@ -9,6 +9,8 @@
 
 void setup() {
   // put your setup code here, to run once:
+
+  //Initialize the system
   bool isInit = systemInit();
   if(isInit) {
     Serial.println("System Initialization Successful!");
@@ -20,8 +22,22 @@ void setup() {
     }// Halt the system if initialization fails
   }
 
+  //Join WiFi network.
+  wifiScan();
+  bool wifiLoginStatus = wifiLogin();
+  if(wifiLoginStatus) {
+    Serial.println("Logged in to WiFi Successfully!");
+    xEventGroupSetBits(wifiEventGroup, WIFI_CONN);
+  }else{
+    Serial.println("WiFi Login Failed!");
+    xEventGroupClearBits(wifiEventGroup, WIFI_CONN);
+  }
 
-  
+  //Establish BLE Server.
+  //Set BLE parameters and register callbacks via btSetUp().
+  btSetUp();
+  xTaskCreate(btMaintain, "BT Maintain Task", 4096, NULL, 1, NULL);
+
 
 
 }
@@ -54,17 +70,6 @@ bool systemInit() {
     return false;
   }
 
-  // Initialize NVS flash, used for storing configuration data even after power off
-  esp_err_t ret = nvs_flash_init();
-  if(ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
-    nvs_flash_erase();
-    ret = nvs_flash_init();
-  }
-  if(ret != ESP_OK) {
-    Serial.println("NVS Flash Initialization Failed!");
-    return false;
-  }
-
   // Initialize FreeRTOS components
   wifiEventGroup = xEventGroupCreate();
   if(wifiEventGroup == NULL){
@@ -77,7 +82,7 @@ bool systemInit() {
 
 
 //This task will keep logging in WiFi if disconnected
-void keepLogInWiFi(void * parameters) {
+void keepLoginWiFi(void * parameters) {
   while(true) {
     // Check WiFi connection status
     if(WiFi.status() != WL_CONNECTED || (xEventGroupGetBits(wifiEventGroup) & WIFI_CONN) == 0){
