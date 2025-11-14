@@ -12,8 +12,8 @@ If you have any varaible or constant that you want to use across multiple files,
 #define WIFI_CONN (1 << 0)
 
 
-#define WIFI_SSID "SJTU" // Replace with your WiFi SSID
-#define WIFI_PASSWORD "Joe20061001*"  // Replace with your WiFi password
+#define WIFISSID "SJTU" // Replace with your WiFi SSID
+#define WIFIPWD "Joe20061001*" // Replace with your WiFi password
 
 const TickType_t wifiReconnPeriod = 20000; // Period to attempt WiFi reconnection in milliseconds
 

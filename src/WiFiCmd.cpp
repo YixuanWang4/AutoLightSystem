@@ -18,7 +18,7 @@ bool wifiLogin() {
     int cnt = 0;
     Serial.println("Connecting to WiFi...");
     WiFi.setAutoReconnect(true);
-    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    WiFi.begin(WIFISSID, WIFIPWD);
     while(WiFi.status() != WL_CONNECTED) {
         vTaskDelay(500);
         cnt++;
