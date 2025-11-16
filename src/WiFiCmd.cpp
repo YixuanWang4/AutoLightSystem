@@ -32,6 +32,7 @@ bool wifiLogin() {
     return true;
 }
 
+//Function to scan available WiFi networks and print them to Serial Monitor, used to assist developers to find out the correct SSID
 void wifiScan() {
     Serial.println("Scanning available WiFi networks...");
     int n = WiFi.scanNetworks();
@@ -41,7 +42,6 @@ void wifiScan() {
         Serial.print(n);
         Serial.println(" networks found:");
         for (int i = 0; i < n; ++i) {
-
             Serial.print(i + 1);
             Serial.print(": ");
             Serial.print(WiFi.SSID(i));
@@ -51,4 +51,30 @@ void wifiScan() {
             delay(10);
         }
     }
+}
+
+/**
+ * Function to connect to IoT platform after logging in to WiFi network, return true if successful
+ * @return true if connection to IoT platform is successful, false otherwise
+ */
+bool wifiConnIOTPlatform() {
+    return true;
+}
+
+/**
+ * Function to periodically check the specific servo status via WiFi connection, called in main loop
+ * @param servoNumber The servo number to be checked
+ * @return Return 1 if the servo needs to be turned on, return -1 if it needs to be turned off, return 0 if no action is needed
+ */
+int wifiCheckServoStatus(int servoNumber) {
+
+    return 0;
+}
+
+/**
+ * Function to logout from the IOT platform, used when the system is going to deep sleep
+ * @return true if disconnect to IoT platform is successful, false otherwise
+ */
+void wifiLogoutIOTPlatform() {
+
 }

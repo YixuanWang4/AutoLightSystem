@@ -8,4 +8,8 @@ We will put here the common includes, definitions, and function declaration for 
 
 bool servoInit();
 
+bool servoSetPower(bool powerMode);
+
+void servoSetMode(int servoNumber, int mode);
+
 #endif

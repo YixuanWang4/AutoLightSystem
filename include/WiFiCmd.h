@@ -17,4 +17,10 @@ bool wifiLogin();
 
 void wifiScan();
 
+bool wifiConnIOTPlatform();
+
+int wifiCheckServoStatus(int servoNumber);
+
+void wifiLogoutIOTPlatform();
+
 #endif

@@ -7,14 +7,17 @@ We will put here the common includes, definitions, and function declaration for 
 #define _BTCmd_h_
 
 #include <Arduino.h>
+
 #include <BLEDevice.h>
-#include <BLEServer.h>
 #include <BLEUtils.h>
-#include <BLE2902.h>
+#include <BLEServer.h>
+#include <BLESecurity.h>
+#include <nvs_flash.h>
 
 
-#define SERVICE_UUID "70f1b487-05ae-43a2-99c7-d15d5ea114b6"
-#define CHARACTERISTIC_UUID "54cb1d1e-556d-48e1-9bd2-3273e4921e2e"
+#define SERVICE_UUID BLEUUID((uint16_t)0x180D)
+#define CHARACTERISTIC_UUID BLEUUID((uint16_t)0x2A37)
+#define AUTH_PASSKEY 123456
 
 bool btInit();
 
