@@ -76,5 +76,5 @@ int wifiCheckServoStatus(int servoNumber) {
  * @return true if disconnect to IoT platform is successful, false otherwise
  */
 void wifiLogoutIOTPlatform() {
-
+    
 }
