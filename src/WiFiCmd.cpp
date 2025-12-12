@@ -10,8 +10,8 @@ Finish your code here.
 
 ThingsCloudMQTT client(
   THINGS_CLOUD_MQTT_HOST,
-  THINGS_CLOUD_ACCESSTOKEN,
-  THINGS_CLOUD_PROJECTKEY);
+  THINGS_CLOUD_MQTT_ACCESSTOKEN,
+  THINGS_CLOUD_MQTT_PROJECTKEY);
 
 bool currentState[3] = {false, false, false};
 
