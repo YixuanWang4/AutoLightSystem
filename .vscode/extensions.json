@@ -1,6 +1,11 @@
 {
     "recommendations": [
+<<<<<<< HEAD
         "pioarduino.pioarduino-ide"
+=======
+        "pioarduino.pioarduino-ide",
+        "platformio.platformio-ide"
+>>>>>>> servo
     ],
     "unwantedRecommendations": [
         "ms-vscode.cpptools-extension-pack"

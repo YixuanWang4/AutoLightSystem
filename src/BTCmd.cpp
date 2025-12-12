@@ -57,11 +57,6 @@ bool btInit() {
 }
 
 bool btSetUp() {
-  Serial.println("Starting BLE Authorization Example!");
-
-  // Initialize the BOOT pin for resetting the read count
-  pinMode(BOOT_PIN, INPUT_PULLUP);
-
   // Clear NVS to remove any cached pairing information
   // This ensures fresh authentication for testing
   Serial.println("Clearing NVS pairing data...");
