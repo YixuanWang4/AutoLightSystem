@@ -6,6 +6,15 @@ Finish your code here.
 */
 
 #include <WiFiCmd.h>
+#include <config.h>
+
+ThingsCloudMQTT client(
+  THINGS_CLOUD_MQTT_HOST,
+  THINGS_CLOUD_ACCESSTOKEN,
+  THINGS_CLOUD_PROJECTKEY);
+
+bool currentState[3] = {false, false, false};
+
 
 //Function to initialize WiFi module before connecting to the network, return true if successful
 bool wifiInit() {
@@ -17,9 +26,9 @@ bool wifiInit() {
 bool wifiLogin() {
     int cnt = 0;
     Serial.println("Connecting to WiFi...");
-    WiFi.setAutoReconnect(true);
-    WiFi.begin(WIFISSID, WIFIPWD);
-    while(WiFi.status() != WL_CONNECTED) {
+    client.setWifiCredentials(WIFISSID, WIFIPWD);
+
+    while(!client.isWifiConnected()) {
         vTaskDelay(500);
         cnt++;
         if(cnt >= 20) { // Timeout after 10 seconds
@@ -27,8 +36,6 @@ bool wifiLogin() {
             return false;
         }
     }
-    Serial.println("WiFi Connected!");
-    Serial.print("IP Address: ");Serial.println(WiFi.localIP());
     return true;
 }
 
@@ -53,28 +60,58 @@ void wifiScan() {
     }
 }
 
-/**
- * Function to connect to IoT platform after logging in to WiFi network, return true if successful
- * @return true if connection to IoT platform is successful, false otherwise
- */
-bool wifiConnIOTPlatform() {
+bool checkWifiConnIOTPlatform() {
+    client.enableDebuggingMessages();
+    if(!client.isMqttConnected()){
+        Serial.println("MQTT Connection Failed!");
+        return false;
+    }
     return true;
 }
 
-/**
- * Function to periodically check the specific servo status via WiFi connection, called in main loop
- * @param servoNumber The servo number to be checked
- * @return Return 1 if the servo needs to be turned on, return -1 if it needs to be turned off, return 0 if no action is needed
- */
-int wifiCheckServoStatus(int servoNumber) {
-
-    return 0;
+void onMQTTConnect() {
+    Serial.println("Connected to ThingsCloud!");
+    client.onAttributesGetResponse([](const String &topic, const JsonObject &obj) {
+        if (obj["result"] == 1) {
+            handleAttributes(obj["attributes"]);
+        }
+    });
+    client.onAttributesPush([](const JsonObject &obj) {
+        handleAttributes(obj);
+    });
+    client.getAttributes();
 }
 
+<<<<<<< HEAD
 /**
  * Function to logout from the IOT platform, used when the system is going to deep sleep
  * @return true if disconnect to IoT platform is successful, false otherwise
  */
 void wifiLogoutIOTPlatform() {
     
+=======
+void handleAttributes(const JsonObject &obj) {
+    Serial.println("Received attributes update from ThingsCloud");   
+        if (obj.containsKey( "frontLightState")) {
+            currentState[0] = obj[ "frontLightState"];
+        }
+        if (obj.containsKey("backLightState")) {
+            currentState[1] = obj["backLightState"];
+        }
+        if (obj.containsKey("washLightState")) {
+            currentState[2] = obj["washLightState"];
+        }
+    }
+
+
+//Function to initialize servos
+void initServos() {
+    for (int i = 0; i < 3; i++) {
+        pinMode(servoPins[i], OUTPUT);
+        digitalWrite(servoPins[i], LOW);  
+        Serial.print("Servo ");
+        Serial.print(i + 1);
+        Serial.println(" initialized");
+    }
+>>>>>>> wifi
 }
