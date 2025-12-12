@@ -11,16 +11,23 @@ We will put here the common includes, definitions, and function declaration for 
 
 #include <config.h>
 
+#include <ThingsCloudWiFiManager.h>
+
+#include <ThingsCloudMQTT.h>
+
+
 bool wifiInit();
 
 bool wifiLogin();
 
 void wifiScan();
 
-bool wifiConnIOTPlatform();
+bool checkWifiConnIOTPlatform() ;
 
-int wifiCheckServoStatus(int servoNumber);
+void onMQTTConnect() ;
 
-void wifiLogoutIOTPlatform();
+void handleAttributes(const JsonObject &obj) ;
+
+void initServos() ;
 
 #endif
