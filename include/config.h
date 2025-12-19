@@ -11,13 +11,11 @@ If you have any varaible or constant that you want to use across multiple files,
 
 #define WIFI_CONN (1 << 0)
 
-#define WIFISSID "AutoLightSys" // Replace with your WiFi SSID
-#define WIFIPWD "111114115" // Replace with your WiFi password
-#define THINGS_CLOUD_MQTT_HOST "mqtt://sh-5-mqtt.iot-api.com:1883"
+#define WIFISSID "Mate 70 pro" // Replace with your WiFi SSID
+#define WIFIPWD "71180600" // Replace with your WiFi password
+#define THINGS_CLOUD_MQTT_HOST "sh-5-mqtt.iot-api.com"
 #define THINGS_CLOUD_MQTT_ACCESSTOKEN "i5izm1ibp5bynpna"
 #define THINGS_CLOUD_MQTT_PROJECTKEY  "CgoH8f6dcJ"
-
-int servoPins[3] = {7, 6, 10};
 
 const TickType_t wifiReconnPeriod = 20000; // Period to attempt WiFi reconnection in milliseconds
 

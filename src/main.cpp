@@ -7,6 +7,8 @@
 
 #include <main.h>
 
+bool currentState[3] = {false, false, false}; // Current state of the servos
+
 void setup() {
   // put your setup code here, to run once:
 
@@ -32,11 +34,16 @@ void setup() {
     Serial.println("WiFi Login Failed!");
     xEventGroupClearBits(wifiEventGroup, WIFI_CONN);
   }
+  if(checkWifiConnIOTPlatform()) {
+    Serial.println("Connected to IoT Platform Successfully!");
+  }else{
+    Serial.println("IoT Platform Connection Failed!");
+  }
 
   //Establish BLE Server.
   //Set BLE parameters and register callbacks via btSetUp().
   btSetUp();
-  xTaskCreate(btMaintain, "BT Maintain Task", 4096, NULL, 1, NULL);
+  //xTaskCreate(btMaintain, "BT Maintain Task", 4096, NULL, 1, NULL);
 
 
 
@@ -44,6 +51,28 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  client.loop();
+  for(int i = 0; i < 3; ++i) {
+    if(currentState[i] != IOTState[i]) {
+      // State has changed, update the servo
+      if(IOTState[i]) {
+        // Turn ON
+        servoSetMode(i, 1);
+        Serial.print("Servo ");
+        Serial.print(i);
+        Serial.println(" turned ON.");
+      }else{
+        // Turn OFF
+        servoSetMode(i, -1);
+        Serial.print("Servo ");
+        Serial.print(i);
+        Serial.println(" turned OFF.");
+      }
+      currentState[i] = IOTState[i]; // Update current state
+      vTaskDelay(500); // Small delay after action
+    }
+  }
+  vTaskDelay(2000); // Delay to avoid busy looping
 }
 
 //Function to initialize the system first

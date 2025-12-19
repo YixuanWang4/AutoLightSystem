@@ -19,6 +19,8 @@ We will put here the common includes, definitions, and function declaration for 
 
 EventGroupHandle_t wifiEventGroup;
 TaskHandle_t keepLoginWifiTaskHandle;
+extern bool IOTState[3];
+extern ThingsCloudMQTT client;
 
 bool systemInit();
 

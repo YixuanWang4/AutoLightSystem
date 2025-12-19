@@ -13,7 +13,7 @@ ThingsCloudMQTT client(
   THINGS_CLOUD_MQTT_ACCESSTOKEN,
   THINGS_CLOUD_MQTT_PROJECTKEY);
 
-bool currentState[3] = {false, false, false};
+bool IOTState[3] = {false, false, false};
 
 
 //Function to initialize WiFi module before connecting to the network, return true if successful
@@ -27,15 +27,6 @@ bool wifiLogin() {
     int cnt = 0;
     Serial.println("Connecting to WiFi...");
     client.setWifiCredentials(WIFISSID, WIFIPWD);
-
-    while(!client.isWifiConnected()) {
-        vTaskDelay(500);
-        cnt++;
-        if(cnt >= 20) { // Timeout after 10 seconds
-            Serial.println("WiFi Connection Timeout!");
-            return false;
-        }
-    }
     return true;
 }
 
@@ -82,36 +73,15 @@ void onMQTTConnect() {
     client.getAttributes();
 }
 
-<<<<<<< HEAD
-/**
- * Function to logout from the IOT platform, used when the system is going to deep sleep
- * @return true if disconnect to IoT platform is successful, false otherwise
- */
-void wifiLogoutIOTPlatform() {
-    
-=======
 void handleAttributes(const JsonObject &obj) {
     Serial.println("Received attributes update from ThingsCloud");   
         if (obj.containsKey( "frontLightState")) {
-            currentState[0] = obj[ "frontLightState"];
+            IOTState[0] = obj[ "frontLightState"];
         }
         if (obj.containsKey("backLightState")) {
-            currentState[1] = obj["backLightState"];
+            IOTState[1] = obj["backLightState"];
         }
         if (obj.containsKey("washLightState")) {
-            currentState[2] = obj["washLightState"];
+            IOTState[2] = obj["washLightState"];
         }
     }
-
-
-//Function to initialize servos
-void initServos() {
-    for (int i = 0; i < 3; i++) {
-        pinMode(servoPins[i], OUTPUT);
-        digitalWrite(servoPins[i], LOW);  
-        Serial.print("Servo ");
-        Serial.print(i + 1);
-        Serial.println(" initialized");
-    }
->>>>>>> wifi
-}
