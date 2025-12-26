@@ -9,8 +9,8 @@ Finish your code here.
 #include <ESP32Servo.h>
 const int kMaxServoNum = 3;  // Maximum number of servos supported
 const int kBjtControlPin = 12;  // Example BJT control pin
-const int kServoOnAngle1 = 130;
-const int kServoOnAngle2 = 50; // Angle for servo ON position
+const int kServoOnAngle1 = 0;
+const int kServoOnAngle2 = 180; // Angle for servo ON position
 const int kServoOffAngle = 90;  // Angle for servo OFF position
 bool servoInitialized = false;  // Flag to check if servo module is initialized
 int servoPins[3] = {7, 10, 2};
@@ -25,7 +25,8 @@ bool servoInit() {
             return false;
         }
         servoarr[i].attach(signal_pin,1000,2000);
-        vTaskDelay(500);
+        servoarr[i].write(kServoOffAngle);  // Set initial position to OFF
+        vTaskDelay(500); // Small delay to allow servo to reach position
         Serial.print("Servo ");
         Serial.print(i);
         Serial.println(" initialized.");
@@ -65,26 +66,22 @@ void servoSetMode(int servoNumber, int mode) {
     if (!servoSetPower(true)) {
         return;  // Failed to set power
     }
-    int targetAngleGo = kServoOffAngle;
-    int targetAngleBack = kServoOffAngle;
+    int targetAngle = kServoOffAngle;  // Default to OFF position
     switch (mode) {
-        case 1:
-            targetAngleGo = kServoOnAngle1;
-            targetAngleBack = kServoOnAngle2;
+        case 1:  // ON position
+            targetAngle = kServoOnAngle1;  // Set to ON angle for servo 1
             break;
-        case -1:
-            targetAngleGo = kServoOnAngle2;
-            targetAngleBack = kServoOnAngle1;
+        case -1:  // ON position for servo 2
+            targetAngle = kServoOnAngle2;  // Set to ON angle for servo 2
             break;
         default:
             servoSetPower(false);  // Invalid mode, turn off power
             return;  // Invalid mode, do nothing
     }
-    servoarr[servoNumber].write(targetAngleGo);  // Set the servo to the target angle
-    delay(500);  // Wait for servo to reach position
-    servoarr[servoNumber].write(targetAngleBack);  // Set to OFF position after action
-    delay(500);  // Wait for servo to reach position
-    servoarr[servoNumber].write(kServoOffAngle);
+    servoarr[servoNumber].write(targetAngle);  // Set the servo to the target angle
+    vTaskDelay(1000);  // Wait for servo to reach position
+    servoarr[servoNumber].write(kServoOffAngle);  // Set to OFF position after action
+    vTaskDelay(1000);  // Wait for servo to reach position
     servoSetPower(false);  // Turn off power after action
     return;
 }

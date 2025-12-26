@@ -27,13 +27,6 @@ void setup() {
   //Join WiFi network.
   wifiScan();
   bool wifiLoginStatus = wifiLogin();
-  if(wifiLoginStatus) {
-    Serial.println("Logged in to WiFi Successfully!");
-    xEventGroupSetBits(wifiEventGroup, WIFI_CONN);
-  }else{
-    Serial.println("WiFi Login Failed!");
-    xEventGroupClearBits(wifiEventGroup, WIFI_CONN);
-  }
   if(checkWifiConnIOTPlatform()) {
     Serial.println("Connected to IoT Platform Successfully!");
   }else{
@@ -72,7 +65,7 @@ void loop() {
       vTaskDelay(500); // Small delay after action
     }
   }
-  vTaskDelay(2000); // Delay to avoid busy looping
+  vTaskDelay(1000); // Delay to avoid busy looping
 }
 
 //Function to initialize the system first
